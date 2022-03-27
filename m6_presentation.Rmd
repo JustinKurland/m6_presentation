@@ -1,0 +1,178 @@
+---
+title: "M6 Forecasting Competition"
+subtitle: ""
+author: "Dream Team"
+institute: ""
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: dream-theme.css
+    lib_dir: libs
+    nature:
+      highlightStyle: arta
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(
+  htmltools.dir.version  = FALSE,
+  htmltools.preserve.raw = FALSE 
+)
+```
+
+# Presentation Roadmap
+- **Short Bios** _(2 minutes)_
+- **Test** _(2 minutes)_
+- **Test**
+  - Test _(2 minutes)_
+  - Test _(2 minutes)_
+  - Test _(2 minutes)_
+  - Test _(2 minutes)_
+- **Summary**
+  - Test _(2 minutes)_
+- **Q & A** _(15 minutes)_
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+suppressWarnings(suppressMessages(library(countdown)))
+countdown(minutes   = 0, 
+          seconds   = 30, 
+          left      = 0, 
+          margin    = "1%", 
+          font_size = "1em", 
+          warn_when = 10)
+```
+
+---
+
+.pull-left[
+## Dream Team
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Ang.png")
+
+```
+[Ang GouSheng](https://www.linkedin.com/in/guosheng-ang/)
+
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Bertram.png")
+
+```
+[Bertram Lee](https://www.linkedin.com/in/bertram-lee/)
+
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Justin.png")
+
+```
+[Justin Kurland](https://www.linkedin.com/in/jbkurland/)
+
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Matt.png")
+```
+[Matt Dancho](https://www.linkedin.com/in/mattdancho/)
+
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Nico.png")
+```
+[Rafael Nicolas Fermin Cota](https://www.linkedin.com/in/rnfc/)
+
+```{r, echo=F,  out.width="17%", out.height="17%"}
+suppressWarnings(suppressMessages(library(knitr)))
+knitr::include_graphics("Ting.png")
+```
+[Ting Hui Lim](https://www.linkedin.com/in/lim-ting-hui/)
+
+]
+
+.pull-right[
+## Home Bases
+```{r, out.width="100%", out.height=="100%", warning=FALSE, echo=FALSE, message=FALSE}
+suppressWarnings(suppressMessages(library(countdown)))
+suppressWarnings(suppressMessages(library(leaflet)))
+suppressWarnings(suppressMessages(library(tidyverse)))
+
+homes_tbl <- read_csv("homes.csv", col_types = cols())
+
+getColor <- function(homes_tbl) {
+  sapply(homes_tbl$ID, function(ID) {
+  if(ID == 1) {
+    "darkblue"
+  } else if(ID == 2) {
+    "darkblue"
+  } else if(ID == 3) {
+    "orange"
+  } else if(ID == 4) {
+    "red" 
+  } else if(ID == 5) {
+    "green"
+  } else {
+    "darkblue"
+  } })
+}
+
+icons <- awesomeIcons(
+  icon      = 'ios-close',
+  iconColor = 'black',
+  library   = 'ion',
+  markerColor = getColor(homes_tbl)
+)
+
+leaflet(data = homes_tbl) %>% 
+  setView(lng=40.55, lat=-22.93, zoom = 1) %>%
+  addProviderTiles(providers$Stamen.Toner) %>%
+  addAwesomeMarkers(~long, ~lat, icon=icons, label=~as.character(location))
+
+```
+]
+---
+# Highchart
+```{r, echo=F, out.width="100%", out.height="80%", warning=FALSE, message=FALSE}
+source('highcharter_position.R')
+hc
+```
+---
+# Plotly
+```{r, echo=F, out.width="100%", out.height="100%", warning=FALSE, message=FALSE}
+source('daily_parallel_coordinates_round_1.R')
+plot_parallel_coord(df, kpi = "Position")
+```
+---
+# Highchart
+```{r, echo=F, out.width="100%", out.height="80%", warning=FALSE, message=FALSE}
+source('highcharter_overall_rank.R')
+hc
+```
+---
+# Plotly
+```{r, echo=F, out.width="100%", out.height="100%", warning=FALSE, message=FALSE}
+source('daily_parallel_coordinates_round_1.R')
+plot_parallel_coord(df, kpi = "Overall Rank (OR)")
+```
+---
+# Highchart
+```{r, echo=F, out.width="100%", out.height="80%", warning=FALSE, message=FALSE}
+source('highcharter_rank_forecasts.R')
+hc
+```
+---
+# Plotly
+```{r, echo=F, out.width="100%", out.height="100%", warning=FALSE, message=FALSE}
+source('daily_parallel_coordinates_round_1.R')
+plot_parallel_coord(df, kpi = "Rank (Forecasts)")
+```
+---
+# Highchart
+```{r, echo=F, out.width="100%", out.height="80%", warning=FALSE, message=FALSE}
+source('highcharter_rank_decisions.R')
+hc
+```
+---
+# Plotly
+```{r, echo=F, out.width="100%", out.height="100%", warning=FALSE, message=FALSE}
+source('daily_parallel_coordinates_round_1.R')
+plot_parallel_coord(df, kpi = "Rank (Decisions)")
+```
